@@ -1,0 +1,63 @@
+/**
+ * SCSS Mixins
+ */
+
+@use './variables' as *;
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin card-style {
+  background: $card-bg;
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  box-shadow: $shadow-sm;
+  cursor: pointer;
+  transition: box-shadow $transition-fast;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+}
+
+@mixin button-style {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-sm;
+  transition: background-color $transition-fast;
+  font-size: 14px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+@mixin input-style {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: $text-secondary;
+  font-size: 14px;
+  width: 100%;
+  padding: $spacing-sm;
+}
+
+@mixin responsive($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: 768px) {
+      @content;
+    }
+  }
+}
+

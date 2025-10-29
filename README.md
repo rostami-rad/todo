@@ -167,6 +167,58 @@ All board data is automatically saved to localStorage:
 
 Data persists across browser sessions.
 
+## 🚀 Deploy و اشتراک‌گذاری دمو
+
+برای ایجاد لینک دمو و به‌اشتراک‌گذاری پروژه با دیگران، می‌توانید از یکی از روش‌های زیر استفاده کنید:
+
+### روش ۱: Vercel (توصیه می‌شود - ساده و رایگان)
+
+1. **پروژه را در GitHub push کنید:**
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git branch -M main
+   git remote add origin YOUR_GITHUB_REPO_URL
+   git push -u origin main
+   ```
+
+2. **Deploy روی Vercel:**
+   - به [vercel.com](https://vercel.com) بروید
+   - با GitHub وارد شوید
+   - "Add New Project" را کلیک کنید
+   - Repository را انتخاب کنید
+   - Next.js به صورت خودکار تشخیص داده می‌شود
+   - "Deploy" را کلیک کنید
+   - بعد از چند دقیقه، لینک شما آماده است: `your-project.vercel.app`
+
+### روش ۲: Netlify
+
+1. پروژه را در GitHub push کنید (مراحل بالا)
+2. به [netlify.com](https://netlify.com) بروید
+3. با GitHub وارد شوید
+4. "Add new site" > "Import an existing project"
+5. Repository را انتخاب کنید
+6. Build settings:
+   - Build command: `npm run build`
+   - Publish directory: `.next`
+7. "Deploy site" را کلیک کنید
+
+### روش ۳: با CLI
+
+```bash
+# نصب Vercel CLI
+npm i -g vercel
+
+# Login و Deploy
+vercel login
+vercel --prod
+```
+
+**نکته:** بعد از هر تغییر در کد، Vercel/Netlify به صورت خودکار پروژه را rebuild می‌کند.
+
+برای جزئیات بیشتر به فایل [DEPLOY.md](./DEPLOY.md) مراجعه کنید.
+
 ## 🎯 Project Requirements Met
 
 ✅ Next.js with App Router  

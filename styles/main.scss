@@ -1,0 +1,337 @@
+/**
+ * Main SCSS file
+ */
+
+@use './variables' as *;
+@use './mixins' as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $primary-bg;
+  color: $text-primary;
+  min-height: 100vh;
+  overflow-x: auto;
+}
+
+// Board styles
+.board-container {
+  min-height: 100vh;
+  padding: $spacing-xl;
+  width: 100%;
+
+  .board-header {
+    margin-bottom: $spacing-xl;
+
+    .board-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: $text-primary;
+      border: none;
+      background: transparent;
+      outline: none;
+      padding: $spacing-sm;
+      border-radius: $border-radius-sm;
+      cursor: text;
+      transition: background-color $transition-fast;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      &:focus {
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+    }
+  }
+
+  .board-lists {
+    display: flex;
+    gap: $spacing-lg;
+    align-items: flex-start;
+    overflow-x: auto;
+    padding-bottom: $spacing-lg;
+
+    @include responsive(mobile) {
+      flex-direction: column;
+    }
+  }
+}
+
+// List styles
+.list-container {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  min-width: 300px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  .list-header {
+    @include flex-between;
+    padding-bottom: $spacing-sm;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+    .list-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: $text-primary;
+      border: none;
+      background: transparent;
+      outline: none;
+      flex: 1;
+      padding: $spacing-xs $spacing-sm;
+      cursor: grab;
+      pointer-events: none; // Prevent text selection during drag
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: $border-radius-sm;
+      }
+
+      &:focus {
+        background-color: rgba(255, 255, 255, 0.15);
+        cursor: text;
+        pointer-events: auto; // Allow editing when focused
+      }
+    }
+
+    .list-options {
+      @include button-style;
+      color: $text-primary;
+      padding: $spacing-xs;
+      font-size: 16px;
+    }
+  }
+
+  .list-cards {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    min-height: 20px;
+  }
+
+  .add-card-button {
+    @include button-style;
+    color: $text-primary;
+    text-align: left;
+    width: 100%;
+    margin-top: $spacing-sm;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+  }
+}
+
+// Card styles
+.card-container {
+  @include card-style;
+  margin-bottom: 0;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  .card-title {
+    @include input-style;
+    margin-bottom: $spacing-sm;
+    font-weight: 500;
+    cursor: grab;
+
+    &:read-only {
+      cursor: grab;
+    }
+
+    &[readonly] {
+      cursor: grab;
+    }
+  }
+
+  .card-comments-button {
+    @include button-style;
+    color: $button-gray;
+    background: transparent;
+    padding: $spacing-xs $spacing-sm;
+    font-size: 13px;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+// Add list button
+.add-list-button {
+  @include button-style;
+  color: $text-primary;
+  background: rgba(255, 255, 255, 0.15);
+  padding: $spacing-md $spacing-lg;
+  border-radius: $border-radius-md;
+  min-width: 300px;
+  text-align: left;
+  font-size: 15px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+}
+
+// Modal styles
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: $spacing-xl;
+
+  @include responsive(mobile) {
+    padding: $spacing-md;
+  }
+}
+
+.modal-content {
+  background: $card-bg;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  color: $text-secondary;
+
+  .modal-header {
+    @include flex-between;
+    margin-bottom: $spacing-xl;
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: $text-secondary;
+    }
+
+    .modal-close {
+      @include button-style;
+      color: $text-secondary;
+      font-size: 24px;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      @include flex-center;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    }
+  }
+
+  .comments-list {
+    margin-bottom: $spacing-xl;
+
+    .comment-item {
+      padding: $spacing-md;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: $spacing-md;
+
+      &:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .comment-author {
+        font-size: 12px;
+        color: $button-gray;
+        margin-bottom: $spacing-xs;
+      }
+
+      .comment-content {
+        font-size: 14px;
+        color: $text-secondary;
+      }
+    }
+  }
+
+  .comment-form {
+    .comment-textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: $spacing-md;
+      border: 1px solid $border-color;
+      border-radius: $border-radius-md;
+      font-size: 14px;
+      font-family: inherit;
+      resize: vertical;
+      margin-bottom: $spacing-md;
+      outline: none;
+
+      &:focus {
+        border-color: $button-green;
+      }
+    }
+
+    .add-comment-button {
+      background: $button-green;
+      color: $text-primary;
+      border: none;
+      padding: $spacing-md $spacing-xl;
+      border-radius: $border-radius-md;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color $transition-fast;
+
+      &:hover {
+        background-color: $button-hover;
+      }
+
+      &:disabled {
+        background-color: $button-gray;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// Drag and drop styles
+.drag-handle {
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.dragging {
+  opacity: 0.5;
+}
+
+.drag-over {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
